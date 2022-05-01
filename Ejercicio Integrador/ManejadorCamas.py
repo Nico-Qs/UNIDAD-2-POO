@@ -1,37 +1,30 @@
 import csv
 import numpy as np
+from numpy import array
 from ClaseCamas import cama
 class ManejadorCamas:
-    __arreglo=np.empty(3,dtype=cama)
-    __dimension=0
-    __cantidad=0
-    __incremento=3
-    def __init__(self,dimension,incremento=3):
-        self.__arreglo=np.empty(dimension,dtype=cama)
-        self.__cantidad=0
-        self.__dimension=dimension
-    def agregar_cam(self,unacama):
-        if self.__cantidad == self.__dimension:
-            self.__dimension+=self.__incremento
-            self.__arreglo.resize(self.__dimension)
-        self.__arreglo[self.__cantidad]=unacama
-        self.__cantidad+=1
+    __arreglo : array
+    def __init__(self):
+        self.__arreglo=self.cargar_objetos()
     def cargar_objetos(self):
+        lista=[]
         archivo=open("camas.csv")
         reader=csv.reader(archivo,delimiter=";")
         next(reader,None)
         for fila in reader:
             c=cama(fila[0],fila[1],fila[2],fila[3],fila[4],fila[5])
-            self.agregar_cam(c)
+            lista.append(c)
         archivo.close()
+        arr=np.array(lista)
+        return arr
     def mostrar(self):
-        for i in range(self.__cantidad):
+        for i in range(len(self.__arreglo)):
             print(self.__arreglo[i])
     def busca(self,nombreap):
         i=0
-        while i<self.__cantidad and self.__arreglo[i].get_nom() != nombreap:
+        while i<len(self.__arreglo) and self.__arreglo[i].get_nom() != nombreap:
             i+=1
-        if i < self.__cantidad:
+        if i < len(self.__arreglo):
             return i
         else:
             return -1
@@ -39,8 +32,6 @@ class ManejadorCamas:
         self.__arreglo[pos].set_alta(fecha)
     def get_id(self,pos):
         return self.__arreglo[pos].get_cama()
-    def ct(self):
-        return self.__cantidad
     def muestra_paciente(self,pos):
         print("\nPaciente: {}\t\t Cama: {}\t\t Habitacion: {}".format(self.__arreglo[pos].get_nom(),self.__arreglo[pos].get_cama(),self.__arreglo[pos].get_habitacion()))
         print("Diagnostico: {}\t\t Fecha de internacion: {}".format(self.__arreglo[pos].get_diag(),self.__arreglo[pos].get_internacion()))
@@ -48,7 +39,7 @@ class ManejadorCamas:
     def listado_internados(self):
         diag=input("Ingrese un diagnostico: ")
         print("Pacientes internados con el diagnostico ingresado")
-        for i in range(self.__cantidad):
+        for i in range(len(self.__arreglo)):
             if self.__arreglo[i].get_diag() == diag and self.__arreglo[i].get_estado() == True:
                 print(self.__arreglo[i])
             else:

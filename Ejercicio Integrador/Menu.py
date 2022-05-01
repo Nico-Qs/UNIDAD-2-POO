@@ -4,7 +4,7 @@ class Menu:
     __instancia_camas: ManejadorCamas
     __instancia_medicamentos: ManejadorMedicamentos
     def __init__(self):
-        self.__instancia_camas=ManejadorCamas(3)
+        self.__instancia_camas=ManejadorCamas()
         self.__instancia_medicamentos=ManejadorMedicamentos()
         self.__instancia_camas.cargar_objetos()
         self.__instancia_medicamentos.cargarlista()
@@ -22,8 +22,6 @@ class Menu:
             self.__instancia_medicamentos.listado(id)
         else:
             print ("No se encuentra el paciente ingresado")
-
-
     def Menu_opciones(self):
         self.mostrar_op()
         op=int(input("Ingrese una opcion 0 para salir: "))
