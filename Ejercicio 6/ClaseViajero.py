@@ -1,4 +1,4 @@
-class ViajeroFrecuente:
+class Viajero:
     __num_viajero= ""
     __dni= ""
     __nombre=""
@@ -24,20 +24,13 @@ class ViajeroFrecuente:
     def getNumViajero(self):
         return self.__num_viajero
     def mostrar(self):
-        print("{}, {}, {}, {}, {}".format(self.__num_viajero,self.__dni,self.__nombre,self.__apellido,self.__millas_acum))
+        print("Nro:{}, DNI: {}, Nombre: {}, Apellido: {}, Millas: {}".format(self.__num_viajero,self.__dni,self.__nombre,self.__apellido,self.__millas_acum))
     def __gt__(self, other):
-        if self.__millas_acum > other:
-            return True
-        else:
-            return False
-    def __radd__(self, other):
-        return ViajeroFrecuente(self.__num_viajero,self.__dni,self.__nombre,self.__apellido,self.__millas_acum+other)
-    def __rsub__(self, other):
-        return ViajeroFrecuente(self.__num_viajero,self.__dni,self.__nombre,self.__apellido,self.__millas_acum-other)
-    def __eq__(self, other) -> bool:
-        if  (type(other)==ViajeroFrecuente):
-            return  self.__millas_acum == other.__millas_acum
-        elif (type(other)==int):
-            return  self.__millas_acum == other
-
-
+        if type(other)==Viajero:
+            return self.__millas_acum > other.__millas_acum
+        elif type(other)==int:
+            return self.__millas_acum > other
+    def __add__(self, other):
+        return Viajero(self.__num_viajero,self.__dni,self.__nombre,self.__apellido,self.__millas_acum+other)
+    def __sub__(self, other):
+        return Viajero(self.__num_viajero,self.__dni,self.__nombre,self.__apellido,self.__millas_acum-other)
